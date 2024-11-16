@@ -56,7 +56,7 @@
         </div>
     </nav>
 
-    <div class="container-fluid p-5 text-center d-flex bg-dark">
+    <div class="container-fluid p-5 text-center d-flex bg-dark" style="margin-top: 100px;">
         <div class="col-md-4 text-center">
             <img id="characterImage" class="text-align-center src="">
             <p id=" noImage" class="text-align-center font-weight-bold d-block">No Image Found</p>
@@ -65,6 +65,7 @@
             <h1 id="characterName" class="text-center mb-5"></h1>
             <p id="characterHouse"></p>
             <p id="characterGender"></p>
+            <p id="characterPatronus"></p>
             <p id="characterSpecies"></p>
             <p id="characterRole"></p>
         </div>
@@ -86,6 +87,7 @@
                             document.getElementById('characterImage').src = character.image;
                             document.getElementById('characterHouse').innerText = `House: ${character.house}`;
                             document.getElementById('characterGender').innerText = `Gender: ${character.gender}`;
+                            document.getElementById('characterPatronus').innerText = `Patronus: ${character.patronus}`;
                             document.getElementById('characterSpecies').innerText = `Species: ${character.species}`;
                             document.getElementById('characterRole').innerText = `Role: ${character.role}`;
 
