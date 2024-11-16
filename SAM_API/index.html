@@ -52,9 +52,9 @@
         <div class="text-center text-white">
             <h1>Welcome to Hogwarts!</h1>
 
-            <form class="d-flex justify-content-center mt-3" role="search">
+            <form class="d-flex justify-content-center mt-3" role="search" id="searchForm">
                 <input class="search-hover form-control rounded-start-pill" type="search" placeholder="Search"
-                    aria-label="Search" style="font-size: 13px;">
+                    id="searchInput" aria-label="Search" style="font-size: 13px;">
                 <button class="btn btn-outline-light rounded-end-pill" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-search" viewBox="0 0 16 16">
@@ -78,34 +78,35 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
     <script>
         document.getElementById('searchForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
-            const searchInput = document.getElementById('searchInput').value.trim();
+            const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
 
             if (searchInput === '') {
                 alert('Please enter a character name!');
                 return;
             }
 
-            fetch(`https://hp-api.onrender.com/api/characters/${searchInput}`)
+            fetch('https://hp-api.onrender.com/api/characters')
                 .then(response => response.json())
                 .then(data => {
                     const characterResults = document.getElementById('characterResults');
                     characterResults.innerHTML = '';
 
-                    if (data && data.length > 0) {
-                        data.forEach(character => {
+                    const filteredCharacters = data.filter(character => character.name.toLowerCase().includes(searchInput));
+
+                    if (filteredCharacters.length > 0) {
+                        filteredCharacters.forEach(character => {
                             const characterCard = `
-                                <div class="card text-white bg-dark mb-3" style="max-width: 15rem;">
-                                    <div class="card-header">${character.name}</div>
+                                <div class="card text-white bg-dark m-3" style="max-width: 15rem;">
+                                    <div class="card-header">
+                                        <img src="${character.image}" class="card-img-top p-3">
+                                        ${character.name}
+                                    </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">House: ${character.house}</h5>
+                                        <p class="card-title">House: ${character.house}</p>
                                         <p class="card-text">Gender: ${character.gender}</p>
                                         <p class="card-text">Species: ${character.species}</p>
                                         <p class="card-text">Role: ${character.role}</p>
