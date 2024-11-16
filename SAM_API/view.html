@@ -17,8 +17,20 @@
     }
 
     p {
-        font-size: 12px;
+        font-size: 15px;
     }
+
+    /* .character-image {
+        max-width: 100%;
+        border-radius: 10px;
+    } */
+    /* 
+    .character-details {
+        background-color: rgb(158, 124, 80);
+        padding: 20px;
+        border-radius: 10px;
+        color: #fff;
+    } */
 </style>
 
 <body>
@@ -37,17 +49,20 @@
                         <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="characters.html">Character</a>
+                        <a class="nav-link" href="characters.html">Characters</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container my-5 text-center">
-        <h1 id="characterName" class="text-white"></h1>
-        <img id="characterImage" class="img-fluid" style="max-width: 300px;">
-        <div class="bg-dark mt-4 text-white" id="characterDetails">
+    <div class="container-fluid p-5 text-center d-flex bg-dark">
+        <div class="col-md-4 text-center">
+            <img id="characterImage" class="text-align-center src="">
+            <p id=" noImage" class="text-align-center font-weight-bold d-block">No Image Found</p>
+        </div>
+        <div class="col-md-6 character-details bg-dark text-white">
+            <h1 id="characterName" class="text-center mb-5"></h1>
             <p id="characterHouse"></p>
             <p id="characterGender"></p>
             <p id="characterSpecies"></p>
@@ -73,6 +88,13 @@
                             document.getElementById('characterGender').innerText = `Gender: ${character.gender}`;
                             document.getElementById('characterSpecies').innerText = `Species: ${character.species}`;
                             document.getElementById('characterRole').innerText = `Role: ${character.role}`;
+
+                            if (character.image) {
+                                document.getElementById('noImage').style.display = 'none';
+                            } else {
+                                document.getElementById('noImage').style.display = 'block';
+                            }
+
                         } else {
                             document.getElementById('characterDetails').innerHTML = '<p>Character not found.</p>';
                         }
