@@ -93,7 +93,35 @@
                 return;
             }
 
+            fetch(`https://hp-api.onrender.com/api/characters/${searchInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    const characterResults = document.getElementById('characterResults');
+                    characterResults.innerHTML = '';
 
+                    if (data && data.length > 0) {
+                        data.forEach(character => {
+                            const characterCard = `
+                                <div class="card text-white bg-dark mb-3" style="max-width: 15rem;">
+                                    <div class="card-header">${character.name}</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">House: ${character.house}</h5>
+                                        <p class="card-text">Gender: ${character.gender}</p>
+                                        <p class="card-text">Species: ${character.species}</p>
+                                        <p class="card-text">Role: ${character.role}</p>
+                                    </div>
+                                </div>
+                            `;
+                            characterResults.innerHTML += characterCard;
+                        });
+                    } else {
+                        characterResults.innerHTML = '<p>No characters found.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    alert('Oops! An error occurred while fetching character data.');
+                });
         });
     </script>
 </body>
